@@ -197,8 +197,12 @@ local start = function(self, s)
   end
 end
 
-local done = function(self)
+local done = function(self, count)
   local f, s = self.failures, self.successes
+  if count then
+    count.failures = count.failures + #f
+    count.successes = count.successes + #s
+  end
   assert((f and s), "call start before done")
   local failed = (#f > 0)
   if failed then
